@@ -1,28 +1,27 @@
-package controller;
+package com.uca.capas.tarea.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 
 @Controller
-@RequestMapping("/date")
 public class DateController {
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody String getDayOfWeek(int dayOfMoth, int mothOfYear, int year) {
+
+	@RequestMapping("/date")
+	public @ResponseBody String getDayOfWeek(HttpServletRequest req) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date;
 		try {
-			date = dateFormat.parse(dayOfMoth + "/" + mothOfYear + "/" + year);
+			date = dateFormat.parse(req.getParameter("dia") + "/" + req.getParameter("mes") + "/" + req.getParameter("año"));
 		} catch (ParseException e) {
 			date = new Date();
-			e.printStackTrace();
+			System.out.println("ups");
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
